@@ -65,6 +65,12 @@ def getmyfund():
         f.getNewPrice()
         
     ret = '<html><title>fund</title>%s\n' % HTMLTABLE
+    ret += '''<meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1"/>
+        <style>
+        @media screen and (max-width:800px) {*{font-size:15px;}}
+        @media (min-width:800px) and (max-width:1024px) {*{font-size:19px;}}
+        @media (min-width:1024px) and (max-width:2048px) {*{font-size:23px;}}
+        </style>'''
     ret += '<tr><td>name</td><td>%</td><td>%%</td><td>date</td><td>$</td><td>Now$</td><td>Buy$</td><td>count</td><td>start</td></tr>'
     for f in funds:
         ret += f.newPrice2Tr()

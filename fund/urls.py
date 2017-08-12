@@ -42,7 +42,7 @@ class MyURL:
     def doVisit(self):
         self.visit += 1
         self.lastvisit = datetime.now().strftime('%y-%m-%d')
-        
+    
     def tohtml(self):
         trhtm = '<tr>'
         trhtm += '<td><a href="?op=mod&id=%d">%d</a></td>' % (self.id, self.id)
@@ -136,7 +136,8 @@ class URLS:
             thisUrls = self.urls
         tablestr = '<table border="1" cellspacing="0" width="80%">\n'
         tablestr += urltableheader()
-        for u in thisUrls.values():
+        us = sorted(thisUrls.values(), key=lambda x:x.visit, reverse=True)
+        for u in us:
             tablestr += u.tohtml()
         tablestr += "</table>\n"
         

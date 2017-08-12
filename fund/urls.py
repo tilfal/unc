@@ -10,7 +10,7 @@ def dbg(msg):
 def gethtmlframe():
     return """<html><head>
     <title>URL</title>
-    </head><body>%s</body>
+    </head><body><center>%s</center></body>
     </html>
     """
     

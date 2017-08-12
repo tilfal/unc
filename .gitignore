@@ -2,3 +2,7 @@ ddns.log
 ~del
 nohup.out
 __pycache__
+.bash*
+.cache
+.python_history
+.viminfo

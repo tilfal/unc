@@ -1,0 +1,80 @@
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>My Wish List</title>
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
+    <style>
+        .want {
+            padding: 4px 10px;
+            color: red;
+            white-space: nowrap;
+            font-size: 12px;
+        }
+        .done {
+            padding: 4px 10px;
+            color: blue;
+            white-space: nowrap;
+            font-size: 12px;
+        }
+    </style>
+    <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
+    <script src="http://webapi.amap.com/maps?v=1.3&key=2c6ea6a9274422bdb48a21bb38370e54"></script>
+    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+</head>
+<body>
+<div id="container"></div>
+
+<script>
+    var map = new AMap.Map("container", {
+        resizeEnable: true,
+        center: [104.016742,34.759776],
+        zoom: 5
+    });
+    map.setMapStyle('amap://styles/whitesmoke');
+    
+    function addMarker(position, text, png, classname) {
+        var marker = new AMap.Marker();
+        marker.setMap(map);
+        
+        var markerContent = document.createElement("div");
+        // 点标记中的图标
+        var markerImg = document.createElement("img");
+        markerImg.className = "markerlnglat";
+        markerImg.src = "http://webapi.amap.com/theme/v1.3/markers/n/" + png;
+        markerContent.appendChild(markerImg);
+        // 点标记中的文本
+        var markerSpan = document.createElement("span");
+        markerSpan.className = classname;
+        markerSpan.innerHTML = text;
+        markerContent.appendChild(markerSpan);
+        
+        marker.setContent(markerContent); //更新点标记内容
+        marker.setPosition(position); //更新点标记位置
+    }
+    
+    function addWant(position, text) {
+        addMarker(position, text, 'mark_r.png', 'want');
+    }
+    function addDone(position, text) {
+        addMarker(position, text, 'mark_b.png', 'done');
+    }
+    
+    addWant([114.143617,27.475256], '武功山');
+    
+    addDone([85.746798,46.129675], '魔鬼城');
+    addDone([86.682389,47.836555], '五彩滩');
+    addDone([87.43291,48.568561], '禾木');
+    addDone([87.030084,48.686967], '喀纳斯');
+    
+    addDone([100.146114,27.231865], '虎跳峡');
+    addDone([100.235645,26.870619], '丽江');
+    addDone([99.908318,27.902122], '普达措');
+    addDone([98.861737,28.433458], '梅里');
+    addDone([98.81588,28.375557], '雨崩');
+    addDone([99.703259,27.803849], '香格里拉');
+    
+    addDone([114.241841,22.222239], '港岛径');
+    
+</script>
+</body>
+</html>

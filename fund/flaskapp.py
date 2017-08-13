@@ -55,7 +55,14 @@ def urlapp():
     elif allargs.get('op') == 'doadd':
         return doadd(allargs.get('s'))
 
-########
+########  MAP
+
+@app.route('/map')
+def map():
+    f = open('map.htm', encoding='gbk')
+    htm = f.read()
+    f.close()
+    return htm
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')# listen all ip address

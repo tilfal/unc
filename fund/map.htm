@@ -23,7 +23,10 @@
 </head>
 <body>
 <div id="container"></div>
-
+<div class="button-group">
+    <input type="button" class="button" value="去过" id="doneBtn"/>
+    <input type="button" class="button" value="想去" id="wantBtn"/>
+</div>
 <script>
     var map = new AMap.Map("container", {
         resizeEnable: true,
@@ -31,10 +34,14 @@
         zoom: 5
     });
     map.setMapStyle('amap://styles/whitesmoke');
+    var wantMarkers = [];
+    var doneMarkers = [];
+    var ifShowWant = true;
+    var ifShowDone = true;
     
     function addMarker(position, text, png, classname) {
         var marker = new AMap.Marker();
-        marker.setMap(map);
+        //marker.setMap(map);
         
         var markerContent = document.createElement("div");
         // 点标记中的图标
@@ -50,13 +57,16 @@
         
         marker.setContent(markerContent); //更新点标记内容
         marker.setPosition(position); //更新点标记位置
+        
+        return marker;
     }
     
     function addWant(position, text) {
-        addMarker(position, text, 'mark_r.png', 'want');
+        wantMarkers.push(addMarker(position, text, 'mark_r.png', 'want'));
+        
     }
     function addDone(position, text) {
-        addMarker(position, text, 'mark_b.png', 'done');
+        doneMarkers.push(addMarker(position, text, 'mark_b.png', 'done'));
     }
     
     addWant([114.143617,27.475256], '武功山');
@@ -74,6 +84,77 @@
     addDone([99.703259,27.803849], '香格里拉');
     
     addDone([114.241841,22.222239], '港岛径');
+    addDone([113.545912,22.194625], '大三巴');
+    addDone([113.565813,22.145393], '威尼斯人');
+    
+    addDone([103.912874,33.142376], '九寨沟');
+    addDone([105.00779,28.473247], '蜀南竹海');
+    addDone([103.352071,29.542613], '峨眉山');
+    
+    addDone([105.003437,37.461736], '沙坡头');
+    
+    addDone([118.160062,30.144661], '黄山');
+    
+    addDone([110.431685,25.147445], '漓江');
+    
+    addDone([120.698571,31.311555], '金鸡湖');
+    addDone([120.41499,31.21352], '太湖');
+    addDone([119.703365,31.173552], '宜兴竹海');
+    addDone([119.697278,31.221224], '龙池山自行车公园');
+    
+    addDone([117.174823,29.293502], '景德镇中国陶瓷博物馆');
+    addDone([118.065641,28.894673], '三清山');
+    addDone([117.887893,29.300808], '婺源');
+    
+    addDone([119.870856,30.604954], '莫干山');
+    
+    addDone([109.645248,18.229745], '亚龙湾');
+    
+    addDone([110.434248,29.315575], '张家界');
+    addDone([112.733763,27.245443], '衡山');
+    addDone([112.937353,28.182849], '岳麓山');
+    
+    addDone([102.508628,35.193784], '拉卜楞寺');
+    addDone([102.628733,34.082785], '郎木寺');
+    addDone([98.221257,39.805934], '嘉峪关');
+    
+    addDone([118.067042,24.444673], '鼓浪屿');
+    addDone([118.098521,24.438373], '厦门大学');
+    addDone([117.972391,27.636986], '武夷山');
+    
+    addDone([107.903097,34.132738], '太白山');
+    addDone([110.450846,36.131489], '壶口瀑布');
+    
+    addDone([117.128157,36.21219], '泰山');
+    
+    function showWant() {
+        if (ifShowWant)
+            for (var i = 0; i < wantMarkers.length; i++)
+                wantMarkers[i].setMap(map);
+        else
+            for (var i = 0; i < wantMarkers.length; i++)
+                wantMarkers[i].setMap(null);
+        ifShowWant = ! ifShowWant
+    }
+    function showDone() {
+        if (ifShowDone)
+            for (var i = 0; i < doneMarkers.length; i++)
+                doneMarkers[i].setMap(map);
+        else
+            for (var i = 0; i < doneMarkers.length; i++)
+                doneMarkers[i].setMap(null);
+        ifShowDone = !ifShowDone
+    }
+    
+    showWant();
+    showDone();
+    
+    AMap.event.addDomListener(document.getElementById('wantBtn'), 'click', function() {
+        showWant();
+    }, false);
+    AMap.event.addDomListener(document.getElementById('doneBtn'), 'click', function() {
+        showDone();
+    }, false);
     
 </script>
 </body>

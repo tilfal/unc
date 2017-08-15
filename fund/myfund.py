@@ -35,7 +35,7 @@ class Fund:
         
         self.name = value[0]
         self.name6 = self.name[:6]
-        self.nowDate = value[4]
+        self.nowDate = value[4][2:]
         self.nowPrice = value[1]
         
     def newPrice2Tr(self):
@@ -50,17 +50,28 @@ class Fund:
         ret += '<td>' + self.nowDate + '</td>\n'
         ret += '<td>' + self.isRMB + '%.2f' % ((newPriceFloat-self.buyPrice)*self.buyCount) + '</td>\n'
         ret += '<td>' + str(self.nowPrice) + '</td>\n'
-        ret += '<td>' + str(self.buyPrice) + '</td>\n'
-        ret += '<td>' + str(self.buyCount) + '</td>\n'
+        ret += '<td>%.4f</td>\n' % self.buyPrice
+        ret += '<td>%d</td>\n' % self.buyCount
         ret += '<td>' + self.buyDate + '</td>\n'
         ret += '</tr>\n'
         return ret
         
+import json
 def getmyfund():
+    fundconffile = open('myfund.json', 'r')
+    fundconf = fundconffile.read()
+    fundconffile.close()
+    fundconf = json.loads(fundconf)
+    fundconf = fundconf['0']
+
     funds = []
+    for afundconf in fundconf:
+        funds.append(Fund(afundconf[0], float(afundconf[1])/afundconf[3], afundconf[2], afundconf[3], afundconf[4], afundconf[5]))
+    '''
     funds.append(Fund('002402', 0.162, 0, 30867, '$', '16-10-18'))
     funds.append(Fund('003721', 0.1614, 0, 278731, '$', '17-05-12'))
     funds.append(Fund('164906', 1.2432, 1.1, 329790, '', '17-05-22'))
+    '''
     for f in funds:
         f.getNewPrice()
         
@@ -75,7 +86,7 @@ def getmyfund():
     for f in funds:
         ret += f.newPrice2Tr()
     ret += '</table>\n'
-    ret += 'ver:170809-1'
+    ret += 'ver:170816-1'
     ret += '</html>'
     return ret
         

@@ -153,12 +153,15 @@ class URLS:
 allurls = URLS()
 
 def visit(id):
+    allurls.fromhtml(HTMLFILENAME)
     allurls.urls[id].doVisit()
     return allurls.printallurls()
 def rmv(id):
+    allurls.fromhtml(HTMLFILENAME)
     allurls.rmv(id)
     return allurls.printallurls()
 def mod(id):
+    allurls.fromhtml(HTMLFILENAME)
     u = allurls.urls[id]
     str = 'id`%d``name`%s``url`%s``tags`%s``usr`%s``pwd`%s``memo`%s' % (u.id,u.name,u.url,','.join(u.tags),u.username,u.pwd,u.memo)
     return '''
@@ -167,6 +170,7 @@ def mod(id):
     </form>
     ''' % (ROOTURL, str.replace('"', '&quot;'))
 def domod(s):
+    allurls.fromhtml(HTMLFILENAME)
     secs = s.split('``')
     dict = {}
     for sec in secs:
@@ -191,6 +195,7 @@ def add():
     </form>
     ''' % (ROOTURL, str)
 def doadd(s):
+    allurls.fromhtml(HTMLFILENAME)
     secs = s.split('``')
     dict = {}
     for sec in secs:
@@ -211,6 +216,7 @@ def load():
     allurls.fromhtml(HTMLFILENAME)
     return gethtmlframe() % allurls.tohtml()
 def filter(tag):
+    allurls.fromhtml(HTMLFILENAME)
     if 'ALL' == tag:
         return gethtmlframe() % allurls.tohtml()
         

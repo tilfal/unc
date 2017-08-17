@@ -2,7 +2,7 @@ from urllib.request import urlopen
 from myconst import HTMLTABLE
 
 class Fund:
-    def __init__(self, fundNo, buyPrice=0, newBasePrice = 0, buyCount=0, isRMB="", buyDate=''):
+    def __init__(self, fundNo, buyPrice=0, newBasePrice = 0, buyCount=0, isRMB="", buyDate='', buyTotal=0):
         self.fundNo = fundNo
         self.buyPrice = buyPrice
         self.newBasePrice = newBasePrice
@@ -10,6 +10,7 @@ class Fund:
         self.isRMB = isRMB
         self.buyDate = buyDate
         self.name = ''
+        self.buyTotal = buyTotal
         
     def getNewPrice(self):
         '''
@@ -51,7 +52,7 @@ class Fund:
         ret += '<td>' + self.isRMB + '%.2f' % ((newPriceFloat-self.buyPrice)*self.buyCount) + '</td>\n'
         ret += '<td>' + str(self.nowPrice) + '</td>\n'
         ret += '<td>%.4f</td>\n' % self.buyPrice
-        ret += '<td>%d</td>\n' % self.buyCount
+        ret += '<td>%.1f</td>\n' % (1.0*self.buyTotal/10000)
         ret += '<td>' + self.buyDate + '</td>\n'
         ret += '</tr>\n'
         return ret
@@ -66,7 +67,7 @@ def getmyfund():
 
     funds = []
     for afundconf in fundconf:
-        funds.append(Fund(afundconf[0], float(afundconf[1])/afundconf[3], afundconf[2], afundconf[3], afundconf[4], afundconf[5]))
+        funds.append(Fund(afundconf[0], float(afundconf[1])/afundconf[3], afundconf[2], afundconf[3], afundconf[4], afundconf[5], afundconf[1]))
     '''
     funds.append(Fund('002402', 0.162, 0, 30867, '$', '16-10-18'))
     funds.append(Fund('003721', 0.1614, 0, 278731, '$', '17-05-12'))
@@ -82,11 +83,11 @@ def getmyfund():
         @media (min-width:800px) and (max-width:1024px) {*{font-size:19px;}}
         @media (min-width:1024px) and (max-width:2048px) {*{font-size:23px;}}
         </style>'''
-    ret += '<tr><td>name</td><td>%</td><td>%%</td><td>date</td><td>$</td><td>Now$</td><td>Buy$</td><td>count</td><td>start</td></tr>'
+    ret += '<tr><td>name</td><td>%</td><td>%%</td><td>update</td><td>$</td><td>Now$</td><td>Buy$</td><td>total</td><td>start</td></tr>'
     for f in funds:
         ret += f.newPrice2Tr()
     ret += '</table>\n'
-    ret += 'ver:170816-1'
+    ret += 'ver:170818-1'
     ret += '</html>'
     return ret
         

@@ -41,7 +41,7 @@ class Fund:
     def newPrice2Tr(self):
         newPriceFloat = float(self.nowPrice)
         ret = '<tr>\n'
-        ret += '<td>' + self.name6 + '</td>\n'
+        ret += '<td><a target="_blank" href="http://fund.eastmoney.com/' + self.fundNo + '.html">' + self.name6 + '</a></td>\n'
         ret += '<td>' + '%.2f' % ((newPriceFloat-self.buyPrice)/self.buyPrice*100) +'%' + '</td>\n'
         if self.newBasePrice == 0:
             ret += '<td></td>\n'

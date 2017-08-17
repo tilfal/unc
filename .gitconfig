@@ -1,3 +1,5 @@
 [user]
 	email = tillfall@126.com
 	name = tillfall
+[credential]
+	helper = store

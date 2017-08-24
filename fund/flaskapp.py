@@ -63,6 +63,13 @@ def map():
     htm = f.read()
     f.close()
     return htm
+    
+@app.route('/map1710')
+def map1710():
+    f = open('map1710.htm', encoding='gbk')
+    htm = f.read()
+    f.close()
+    return htm
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')# listen all ip address

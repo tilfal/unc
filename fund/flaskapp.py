@@ -13,9 +13,11 @@ def downfile(filename):
 def fund():
     return getmyfund()
     
-@app.route('/downeastmoney')
+@app.route('/eastmoney')
 def down():
-    return getfileslink()
+    files = getfileslink()
+    refresh = '\n<li></li>\n<li><a href="/geteastmoney" target="_blank">refresh</a></li>'
+    return files + refresh
     
 @app.route('/geteastmoney')
 def getfromeastmoney():

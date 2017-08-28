@@ -28,10 +28,10 @@ class Fund:
         self.nowPrice = value[1]
         '''
         
-        #var hq_str_f_002402="南方亚洲美元债券(QDII)A现汇,0.1651,0.1651,0.1651,2017-07-28,27.2441";
+        #var hq_str_f_002402="NFMY(QDII)AXH,0.1651,0.1651,0.1651,2017-07-28,27.2441";
         req = urlopen('http://hq.sinajs.cn/list=f_'+self.fundNo)
         pageInfo = req.read().decode('gbk')
-        bodyInfo = pageInfo[21:-3]#南方亚洲美元债券(QDII)A现汇,0.1651,0.1651,0.1651,2017-07-28,27.2441
+        bodyInfo = pageInfo[21:-3]#NFMY(QDII)AXH,0.1651,0.1651,0.1651,2017-07-28,27.2441
         value = bodyInfo.split(',')
         
         self.name = value[0]
@@ -57,16 +57,51 @@ class Fund:
         ret += '</tr>\n'
         return ret
         
+from datetime import datetime
+        
+class DoneFund:
+    def __init__(self, info):
+        self.id = info[0]
+        self.start = info[1]
+        self.end = info[2]
+        self.total = info[3]
+        self.bonus = info[4]
+        self.rmb = info[5]
+        self.platform = info[6]
+        
+        self.rate = self.bonus*100.0/self.total
+        self.rateofyear = self.rate*365/((datetime.strptime(self.end, '%y-%m-%d')-datetime.strptime(self.start, '%y-%m-%d')).days)
+        
+    def tr(self):
+        ret = '<tr>'
+        ret += '<td>%s</td>' % self.id
+        ret += '<td>%s</td>' % self.start
+        ret += '<td>%s</td>' % self.end
+        ret += '<td>%d</td>' % self.total
+        ret += '<td>%d</td>' % self.bonus
+        ret += '<td>%.2f</td>' % self.rate
+        ret += '<td>%.2f</td>' % self.rateofyear
+        ret += '<td>%s</td>' % self.rmb
+        ret += '<td>%s</td>' % self.platform        
+        ret += '</tr>\n'
+        return ret
+        
 import json
+
 def getmyfund():
     fundconffile = open('myfund.json', 'r')
     fundconf = fundconffile.read()
     fundconffile.close()
     fundconf = json.loads(fundconf)
-    fundconf = fundconf['0']
+    currfundconf = fundconf['0']
+    
+    donefundconf = fundconf['2']
+    donefunds = []
+    for adonefundconf in donefundconf:
+        donefunds.append(DoneFund(adonefundconf))
 
     funds = []
-    for afundconf in fundconf:
+    for afundconf in currfundconf:
         funds.append(Fund(afundconf[0], float(afundconf[1])/afundconf[3], afundconf[2], afundconf[3], afundconf[4], afundconf[5], afundconf[1]))
     '''
     funds.append(Fund('002402', 0.162, 0, 30867, '$', '16-10-18'))
@@ -87,10 +122,21 @@ def getmyfund():
     for f in funds:
         ret += f.newPrice2Tr()
     ret += '</table>\n'
-    ret += 'ver:170818-1'
+    ret += '<hr/>\n'
+    
+    ret += HTMLTABLE + '\n'
+    ret += '<tr><td>id</td><td>start</td><td>end</td><td>total</td><td>return</td><td>%</td><td>%%</td><td>rmb</td><td>platform</td></tr>\n'
+    for adonefund in donefunds:
+        ret += adonefund.tr()
+    ret += '</table>\n'
+    
+    ret += '<hr/>Fixed investment, 160716, 200/day, jd<br>\n'
+    ret += 'ver:170828-1'
     ret += '</html>'
     return ret
-        
+
+if __name__ == '__main__':
+    print(getmyfund())
         
 '''
 def getFund(fundNo):

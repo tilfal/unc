@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, send_from_directory
 from myfund import getmyfund
 from top_of_eastmoney import getfileslink, save
 from urls import load, visit, filter, rmv, ROOTURL, mod, domod, add, doadd
@@ -8,6 +8,10 @@ app = Flask(__name__)
 @app.route('/<filename>')
 def downfile(filename):
     return None
+    
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory('static', 'favicon.ico', mimetype='image/vnd.microsoft.icon')
     
 @app.route('/myfund')
 def fund():

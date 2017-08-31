@@ -48,12 +48,12 @@ class Fund:
             ret += '<td></td>\n'
         else:
             ret += '<td>' + '%.2f' % ((newPriceFloat-self.buyPrice*self.newBasePrice)/(self.buyPrice*self.newBasePrice)*100) +'%' + '</td>\n'
-        ret += '<td>' + self.nowDate + '</td>\n'
+        ret += '<td>' + self.nowDate[3:] + '</td>\n'
         ret += '<td>' + self.isRMB + '%.2f' % ((newPriceFloat-self.buyPrice)*self.buyCount) + '</td>\n'
         ret += '<td>' + str(self.nowPrice) + '</td>\n'
         ret += '<td>%.4f</td>\n' % self.buyPrice
         ret += '<td>%.1f</td>\n' % (1.0*self.buyTotal/10000)
-        ret += '<td>' + self.buyDate + '</td>\n'
+        ret += '<td>' + self.buyDate[3:] + '</td>\n'
         ret += '</tr>\n'
         return ret
         
@@ -75,8 +75,8 @@ class DoneFund:
     def tr(self):
         ret = '<tr>'
         ret += '<td>%s</td>' % self.id
-        ret += '<td>%s</td>' % self.start
-        ret += '<td>%s</td>' % self.end
+        ret += '<td>%s</td>' % self.start[3:]
+        ret += '<td>%s</td>' % self.end[3:]
         ret += '<td>%d</td>' % self.total
         ret += '<td>%d</td>' % self.bonus
         ret += '<td>%.2f</td>' % self.rate

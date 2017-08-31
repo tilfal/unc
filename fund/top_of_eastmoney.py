@@ -44,6 +44,8 @@ def save():
     
 def getfileslink():
     files = listdir(PATH)
+    files.sort(reverse=True)
+    
     ret = []
     for file in files:
         ret.append('<li><a href="' + PATH + file + '">' + file + '</a></li>')

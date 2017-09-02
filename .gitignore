@@ -8,3 +8,4 @@ __pycache__
 .viminfo
 ghostdriver.log
 .fontconfig
+zeppelin-0.7.2-bin-all*

@@ -9,3 +9,4 @@ __pycache__
 ghostdriver.log
 .fontconfig
 zeppelin-0.7.2-bin-all*
+.local
